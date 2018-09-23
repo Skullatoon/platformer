@@ -5,6 +5,7 @@ using MonoGame.Extended;
 using MonoGame.Extended.Tiled;
 using MonoGame.Extended.Tiled.Graphics;
 using MonoGame.Extended.ViewportAdapters;
+using System.Collections;
 
 namespace Myplatformer
 {
@@ -21,7 +22,13 @@ namespace Myplatformer
         Camera2D camera = null;
         TiledMap map = null;
         TiledMapRenderer mapRenderer = null;
+        TiledMapTileLayer collisionLayer;
+        public ArrayList allCollisionTiles = new ArrayList();
+        public Sprite[,] levelGrid;
 
+        public int tileHeight = 0;
+        public int levelTileWidth = 0;
+        public int levelTileHeight = 0;
 
         public Game1()
         {
@@ -43,7 +50,7 @@ namespace Myplatformer
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            player.Load(Content); // call load function
+            player.Load(Content, this); // call load function
 
             BoxingViewportAdapter viewportAdapter = new BoxingViewportAdapter(Window, GraphicsDevice, graphics.GraphicsDevice.Viewport.Width, graphics.GraphicsDevice.Viewport.Height);
 
@@ -72,6 +79,8 @@ namespace Myplatformer
             float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
             player.Update(deltaTime);
 
+            camera.Position = player.playerSprite.position - new Vector2(graphics.GraphicsDevice.Viewport.Width / 2, graphics.GraphicsDevice.Viewport.Height / 2);
+
             base.Update(gameTime);
         }//call updatefrom player class
 
@@ -94,6 +103,22 @@ namespace Myplatformer
             spriteBatch.End();
 
             base.Draw(gameTime);
+        }
+
+        public void SetUpTiles()
+        {
+            tileHeight = map.TileHeight;
+            levelTileHeight = map.Height;
+            levelTileWidth = map.Width;
+            levelGrid = new Sprite[levelTileWidth, levelTileHeight];
+
+            foreach (TiledMapTileLayer layer in map.TileLayers)
+            {
+                if (layer.Name == "collision")
+                {
+                    collisionLayer = layer;
+                }
+            }
         }
     }
 }
