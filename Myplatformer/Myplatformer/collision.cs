@@ -38,8 +38,8 @@ namespace Myplatformer
 
             playerPrediction.position += hero.velocity * deltaTime;
 
-            int playerColumn = (int)Math.Round(playerPrediction.position.X / game.tileHeight);
-            int playerRow = (int)Math.Round(playerPrediction.position.Y / game.tileHeight);
+            int playerColumn = (int)playerPrediction.position.X / game.tileHeight;
+            int playerRow = (int)playerPrediction.position.Y / game.tileHeight;
             Vector2 playerTile = new Vector2(playerColumn, playerRow);
 
             Vector2 leftTile = new Vector2(playerTile.X - 1, playerTile.Y);
@@ -78,6 +78,27 @@ namespace Myplatformer
             {
                 hero = CollideAbove(game, hero, topTile, playerPrediction);
             }
+            //check for collisions below and left of player
+            if(leftCheck == false && bottomCheck == false&&bottomLeftCheck ==true)
+            {
+                hero = CollideBottomDiagonals(hero, bottomLeftTile, playerPrediction);
+            }
+
+            if (rightCheck == false && bottomCheck == false && bottomRightCheck == true)
+            {
+
+                //check diagonal collisions
+                hero = CollideBottomDiagonals(hero, bottomRightTile, playerPrediction);
+            }
+            if (leftCheck == false && topCheck==false && topLeftCheck ==true)
+            {
+                hero = CollideAboveDiagonals(hero, topLeftTile, playerPrediction);
+            }
+            if (rightCheck==false && topCheck==false && topRightCheck == true )
+            {
+                hero = CollideAboveDiagonals(hero, topRightTile, playerPrediction);
+            }
+
             return hero;
         }
 
@@ -155,6 +176,66 @@ namespace Myplatformer
                 hero.velocity.Y = 0;
             }
 
+            return hero;
+        }
+
+        Sprite CollideBottomDiagonals(Sprite hero,Vector2 tileindex, Sprite playerPrediction)
+        {
+            Sprite tile = game.levelGrid[(int)tileindex.X, (int)tileindex.Y];
+
+            int leftEdgeDistance = Math.Abs(tile.leftEdge - playerPrediction.rightEdge);
+            int rightEdgeDistance = Math.Abs(tile.rightEdge - playerPrediction.leftEdge);
+            int topEdgeDistance = Math.Abs(tile.topEdge - playerPrediction.bottomEdge);
+
+            if (IsColliding(playerPrediction,tile)== true)
+            {
+                if(topEdgeDistance < rightEdgeDistance && topEdgeDistance < leftEdgeDistance)
+                {
+                    hero.position.Y = tile.topEdge - hero.height + hero.offset.Y;
+                    hero.velocity.Y = 0;
+                }
+                else if (rightEdgeDistance <leftEdgeDistance)
+                {
+                    hero.position.X = tile.rightEdge + hero.offset.X;
+                    hero.velocity.X = 0;
+                }
+                else
+                {
+                    hero.position.X = tile.leftEdge - hero.width + hero.offset.X;
+                    hero.velocity.X = 0;
+                }
+            }
+
+            return hero;
+        }
+
+        Sprite CollideAboveDiagonals(Sprite hero, Vector2 tileIndex, Sprite playerPrediction)
+        {
+            Sprite tile = game.levelGrid[(int)tileIndex.X, (int)tileIndex.Y];
+
+            int leftEdgeDistance = Math.Abs(tile.rightEdge - playerPrediction.leftEdge);
+            int rightEdgeDistance = Math.Abs(tile.leftEdge - playerPrediction.rightEdge);
+            int bottomEdgeDistance = Math.Abs(tile.bottomEdge - playerPrediction.topEdge);
+
+
+            if(IsColliding(playerPrediction, tile)==true)
+            {
+                if(bottomEdgeDistance< leftEdgeDistance && bottomEdgeDistance<rightEdgeDistance)
+                {
+                    hero.position.Y = tile.bottomEdge + hero.offset.Y;
+                    hero.velocity.Y = 0;
+                }
+                else if (leftEdgeDistance < rightEdgeDistance)
+                {
+                    hero.position.X = tile.rightEdge + hero.offset.Y;
+                    hero.velocity.X = 0;
+                }
+                else
+                {
+                    hero.position.X = tile.leftEdge- hero.width + hero.offset.X;
+                    hero.velocity.X = 0;
+                }
+            }
             return hero;
         }
 
