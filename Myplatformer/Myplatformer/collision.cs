@@ -197,12 +197,12 @@ namespace Myplatformer
                 else if (rightEdgeDistance <leftEdgeDistance)
                 {
                     hero.position.X = tile.rightEdge + hero.offset.X;
-                    hero.velocity.X = 0;
+                    
                 }
                 else
                 {
                     hero.position.X = tile.leftEdge - hero.width + hero.offset.X;
-                    hero.velocity.X = 0;
+                   
                 }
             }
 
@@ -223,17 +223,17 @@ namespace Myplatformer
                 if(bottomEdgeDistance< leftEdgeDistance && bottomEdgeDistance<rightEdgeDistance)
                 {
                     hero.position.Y = tile.bottomEdge + hero.offset.Y;
-                    hero.velocity.Y = 0;
+                   
                 }
                 else if (leftEdgeDistance < rightEdgeDistance)
                 {
                     hero.position.X = tile.rightEdge + hero.offset.Y;
-                    hero.velocity.X = 0;
+                   
                 }
                 else
                 {
                     hero.position.X = tile.leftEdge- hero.width + hero.offset.X;
-                    hero.velocity.X = 0;
+                 
                 }
             }
             return hero;

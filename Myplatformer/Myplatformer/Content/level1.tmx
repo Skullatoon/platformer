@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.0" orientation="orthogonal" renderorder="right-down" width="30" height="15" tilewidth="64" tileheight="64" infinite="0" nextlayerid="4" nextobjectid="1">
+<map version="1.2" tiledversion="1.2.0" orientation="orthogonal" renderorder="right-down" width="30" height="15" tilewidth="64" tileheight="64" infinite="0" nextlayerid="6" nextobjectid="4">
  <tileset firstgid="1" source="Castle.tsx"/>
  <layer id="3" name="bg2" width="30" height="15">
   <data encoding="base64" compression="zlib">
@@ -8,12 +8,19 @@
  </layer>
  <layer id="2" name="bg1" width="30" height="15">
   <data encoding="base64" compression="zlib">
-   eJxjYEAARiBmAmJuIGYFYjYG2gJk+9Axre2XI0ATUkuMPmxAjQBNSC0x+kixl1i12MT4KbAXm/16WGhsYsTYi00fMj2YgAsQm+DBxABS0jM1ASnxO5jtJTbcqG0vseZQOz0TMseSTHOHKgAAhL8NFg==
+   eJxjYEAARiBmAmJuIGYFYjYG2gJk+9Axre2XI0ATUkuMPmxAjQBNSC0x+kixl1i11LYXm349LDQ2MWIALn3E6qcncAFiEzyYGEBKeqYmICV+B7O9xIYbte0l1hxqp2dC5liSae5QBQD70Az4
   </data>
  </layer>
  <layer id="1" name="collision" width="30" height="15">
   <data encoding="base64" compression="zlib">
-   eJzTYSAdMAMxCxE0DDACMRMQswIxG1RMhwx7LYHYigC2Q7JPCoiFoVgGaj859pIClLCI6dDBXmzmE2MvLEztyLCTH2o+Pxn2wvSTA8Sh5oNomPu5SbBXHI1vCdVPKF0h24sMkO3FlUbtsOhjQNKnTsC96PbCwp4c/xJrrzxUnTwWt1DDXmxpj1DY09K/uMyihr36NLQXFj+uSJjc8gYW5yBAqKwlFiPHL6EyXAWqjlo0LDwIqQUAM3AchQ==
+   eJzTYSAdMAMxCxE0DDACMRMQswIxG1RMhwx7LYHYigC2Q7JPCoiFoVgGaj859pIClLCI6dDBXmzmE2MvLEzt6GwvpQBmPsz93BTYawnVTyhdIduL7hYdqBm4zMEVvjDz1Am4kdrhPBjsxZb2CIU9rf2LSy+l9urTwV5XJExJ/oPpJVTWEouR45dQGa4CVUctGhYehNQCAEnTGjo=
   </data>
  </layer>
+ <objectgroup color="#c80000" id="4" name="enemies">
+  <object id="1" x="350" y="808"/>
+  <object id="3" x="350" y="419"/>
+ </objectgroup>
+ <objectgroup color="#00c800" id="5" name="goal">
+  <object id="2" x="1762" y="291"/>
+ </objectgroup>
 </map>
