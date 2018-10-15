@@ -21,7 +21,7 @@ namespace Myplatformer
 
         Player player = new Player();
 
-        List<Enemy> enemies = new List<Enemy>();
+        public List<Enemy> enemies = new List<Enemy>();
         public Chest goal = null;
 
         Camera2D camera = null;
@@ -109,6 +109,8 @@ namespace Myplatformer
                 enemy.Update(deltaTime);
             }
 
+            goal.Update(deltaTime);
+
             camera.Position = player.playerSprite.position - new Vector2(graphics.GraphicsDevice.Viewport.Width / 2, graphics.GraphicsDevice.Viewport.Height / 2);
 
             base.Update(gameTime);
@@ -129,12 +131,13 @@ namespace Myplatformer
             mapRenderer.Draw(map, ref viewMatrix, ref projectionMatrix);
             //call draw function 
             player.Draw(spriteBatch);
+            goal.Draw(spriteBatch);
 
-            foreach(Enemy enemy in enemies)
+            foreach (Enemy enemy in enemies)
             {
                 enemy.Draw(spriteBatch);
             }
-            goal.Draw(spriteBatch);
+            
             // finish drawing
             spriteBatch.End();
             //drawing UI

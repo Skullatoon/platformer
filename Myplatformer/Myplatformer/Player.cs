@@ -12,7 +12,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Myplatformer
 {
-    class Player
+    public class Player
     {
         public Sprite playerSprite = new Sprite();
 
@@ -21,7 +21,7 @@ namespace Myplatformer
         float maxRunSpeed = 500f;
         float friction = 500f;
         float terminalVelocity = 500f;
-        public float jumpStrength = 500f;
+        public float jumpStrength = 50000f;
 
         Collision collision = new Collision();
 
@@ -61,6 +61,16 @@ namespace Myplatformer
             UpdateInput(deltaTime);
             playerSprite.Update(deltaTime);
             playerSprite.UpdateHitbox();
+
+            if (collision.IsColliding(playerSprite, game.goal.chestSprite))
+            {
+                game.Exit();
+            }
+
+            for (int i = 0; i < game.enemies.Count;i++)
+            {
+                playerSprite = collision.CollideWithMonster(this, game.enemies[i], deltaTime, game);
+            }
         }
 
         public void Draw (SpriteBatch spriteBatch)
@@ -112,8 +122,10 @@ namespace Myplatformer
                 playerSprite.Pause();
             }
 
-            if (Keyboard.GetState().IsKeyDown(Keys.Space) == true)
+            if (Keyboard.GetState().IsKeyDown(Keys.Space) == true && playerSprite.canjump ==true)
             {
+                playerSprite.canjump = false;
+                localAcceleration.Y -= jumpStrength;
                 jumpSoundinstance.Play();
             }
 
@@ -126,6 +138,17 @@ namespace Myplatformer
             else if (playerSprite.velocity.X < -maxRunSpeed)
             {
                 playerSprite.velocity.X = -maxRunSpeed;
+            }
+
+            if (wasMovingLeft && (playerSprite.velocity.X>0)|| wasMovingRight && (playerSprite.velocity.X <0))
+            {
+                //clamp velocity to prevent friction slide
+                playerSprite.velocity.X = 0;
+            }
+
+            if (playerSprite.velocity.Y > terminalVelocity)
+            {
+                playerSprite.velocity.Y = terminalVelocity;
             }
 
             playerSprite.position += playerSprite.velocity * deltaTime;

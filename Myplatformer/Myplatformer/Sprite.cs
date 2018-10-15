@@ -15,6 +15,8 @@ namespace Myplatformer
         public Vector2 velocity = Vector2.Zero;
         public Vector2 offset = Vector2.Zero;
 
+        public bool canjump = false;
+
         Texture2D texture;
 
         public int width = 0;

@@ -174,6 +174,7 @@ namespace Myplatformer
             {
                 hero.position.Y = tile.topEdge - hero.height + hero.offset.Y;
                 hero.velocity.Y = 0;
+                hero.canjump = true;
             }
 
             return hero;
@@ -193,6 +194,7 @@ namespace Myplatformer
                 {
                     hero.position.Y = tile.topEdge - hero.height + hero.offset.Y;
                     hero.velocity.Y = 0;
+                    hero.canjump = true;
                 }
                 else if (rightEdgeDistance <leftEdgeDistance)
                 {
@@ -237,6 +239,38 @@ namespace Myplatformer
                 }
             }
             return hero;
+        }
+
+        public Sprite CollideWithMonster (Player hero,Enemy monster,float deltaTime,Game1 theGame)
+        {
+            Sprite playerPrediction = new Sprite();
+            playerPrediction.position = hero.playerSprite.position;
+            playerPrediction.width = hero.playerSprite.width;
+            playerPrediction.height = hero.playerSprite.height;
+            playerPrediction.offset = hero.playerSprite.offset;
+            playerPrediction.UpdateHitbox();
+
+            playerPrediction.position += hero.playerSprite.velocity * deltaTime;
+
+            if (IsColliding(playerPrediction, monster.enemySprite))
+            {
+                int leftEdgeDistance = Math.Abs(monster.enemySprite.leftEdge - playerPrediction.rightEdge);
+                int rightEdgeDistance = Math.Abs(monster.enemySprite.rightEdge - playerPrediction.leftEdge);
+                int topEdgeDistance = Math.Abs(monster.enemySprite.topEdge - playerPrediction.bottomEdge);
+                int bottomEdgeDistance = Math.Abs(monster.enemySprite.bottomEdge - playerPrediction.topEdge);
+
+                if(topEdgeDistance< leftEdgeDistance && topEdgeDistance <rightEdgeDistance && topEdgeDistance < bottomEdgeDistance)
+                {
+                    theGame.enemies.Remove(monster);
+                    hero.playerSprite.velocity.Y -= hero.jumpStrength * deltaTime;
+                    hero.playerSprite.canjump = false;
+                }
+                else
+                {
+                    theGame.Exit();
+                }
+            }
+            return hero.playerSprite;
         }
 
     }

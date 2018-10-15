@@ -29,6 +29,12 @@ namespace Myplatformer
         {
             chestSprite.Draw(spriteBatch);
         }
+
+        public void Update (float deltaTime)
+        {
+            collision.game = game;
+            chestSprite.UpdateHitbox();
+        }
     
     }
 }
